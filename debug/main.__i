@@ -1,0 +1,6 @@
+-c --cpu Cortex-M0 -g -O0 --apcs=interwork -I.\inc -I.\Headers
+-I C:\Keil_v5\ARM\RV31\INC
+-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include
+-I C:\Keil_v5\ARM\Inc\ST\STM32F0xx
+-DUSE_STDPERIPH_DRIVER -DSTM32F0XX -DSTM32F030
+-o .\debug\main.o --omf_browse .\debug\main.crf --depend .\debug\main.d "user\main.c"
