@@ -25,6 +25,7 @@
 ".\debug\main.o"
 ".\debug\cmd.o"
 ".\debug\delay.o"
+".\debug\nfc.o"
 --strict --scatter ".\debug\NFC.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

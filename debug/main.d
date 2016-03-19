@@ -30,3 +30,4 @@
 .\debug\main.o: C:\Keil_v5\ARM\ARMCC\bin\..\include\stdio.h
 .\debug\main.o: user\cmd.h
 .\debug\main.o: user\delay.h
+.\debug\main.o: user\nfc.h
