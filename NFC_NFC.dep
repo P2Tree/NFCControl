@@ -640,7 +640,7 @@ I (.\inc\stm32f0xx_tim.h)(0x4F6C6027)
 I (.\inc\stm32f0xx_usart.h)(0x4F6C6027)
 I (.\inc\stm32f0xx_wwdg.h)(0x4F6C6027)
 I (.\inc\stm32f0xx_misc.h)(0x4F6C6027)
-F (.\user\main.c)(0x56ED591B)(-c --cpu Cortex-M0 -g -O0 --apcs=interwork -I.\inc -I.\Headers-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include-I C:\Keil_v5\ARM\Inc\ST\STM32F0xx-DUSE_STDPERIPH_DRIVER -DSTM32F0XX -DSTM32F030-o .\debug\main.o --omf_browse .\debug\main.crf --depend .\debug\main.d)
+F (.\user\main.c)(0x56EE252A)(-c --cpu Cortex-M0 -g -O0 --apcs=interwork -I.\inc -I.\Headers-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include-I C:\Keil_v5\ARM\Inc\ST\STM32F0xx-DUSE_STDPERIPH_DRIVER -DSTM32F0XX -DSTM32F030-o .\debug\main.o --omf_browse .\debug\main.crf --depend .\debug\main.d)
 I (.\inc\stm32f0xx.h)(0x4F6C6026)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include\core_cm0.h)(0x53688AAC)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x53463A44)
@@ -669,20 +669,21 @@ I (.\inc\stm32f0xx_usart.h)(0x4F6C6027)
 I (.\inc\stm32f0xx_wwdg.h)(0x4F6C6027)
 I (.\inc\stm32f0xx_misc.h)(0x4F6C6027)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x53463A44)
-I (user\cmd.h)(0x56ED0697)
+I (user\cmd.h)(0x56EE250D)
 I (user\delay.h)(0x56ECF47E)
-I (user\nfc.h)(0x56ED5BB0)
-F (.\user\cmd.h)(0x56ED0697)()
-F (.\user\cmd.c)(0x56ECFB5D)(-c --cpu Cortex-M0 -g -O0 --apcs=interwork -I.\inc -I.\Headers-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include-I C:\Keil_v5\ARM\Inc\ST\STM32F0xx-DUSE_STDPERIPH_DRIVER -DSTM32F0XX -DSTM32F030-o .\debug\cmd.o --omf_browse .\debug\cmd.crf --depend .\debug\cmd.d)
-I (user\cmd.h)(0x56ED0697)
+I (user\nfc.h)(0x56EE22B5)
+F (.\user\cmd.h)(0x56EE250D)()
+F (.\user\cmd.c)(0x56EE054B)(-c --cpu Cortex-M0 -g -O0 --apcs=interwork -I.\inc -I.\Headers-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include-I C:\Keil_v5\ARM\Inc\ST\STM32F0xx-DUSE_STDPERIPH_DRIVER -DSTM32F0XX -DSTM32F030-o .\debug\cmd.o --omf_browse .\debug\cmd.crf --depend .\debug\cmd.d)
+I (user\cmd.h)(0x56EE250D)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x53463A44)
+I (user\nfc.h)(0x56EE22B5)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x53463A44)
 F (.\user\delay.c)(0x56ECF4A6)(-c --cpu Cortex-M0 -g -O0 --apcs=interwork -I.\inc -I.\Headers-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include-I C:\Keil_v5\ARM\Inc\ST\STM32F0xx-DUSE_STDPERIPH_DRIVER -DSTM32F0XX -DSTM32F030-o .\debug\delay.o --omf_browse .\debug\delay.crf --depend .\debug\delay.d)
 I (user\delay.h)(0x56ECF47E)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x53463A44)
 F (.\user\delay.h)(0x56ECF47E)()
-F (.\user\nfc.h)(0x56ED5BB0)()
-F (.\user\nfc.c)(0x56ED5C46)(-c --cpu Cortex-M0 -g -O0 --apcs=interwork -I.\inc -I.\Headers-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include-I C:\Keil_v5\ARM\Inc\ST\STM32F0xx-DUSE_STDPERIPH_DRIVER -DSTM32F0XX -DSTM32F030-o .\debug\nfc.o --omf_browse .\debug\nfc.crf --depend .\debug\nfc.d)
+F (.\user\nfc.h)(0x56EE22B5)()
+F (.\user\nfc.c)(0x56EE2B6B)(-c --cpu Cortex-M0 -g -O0 --apcs=interwork -I.\inc -I.\Headers-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include-I C:\Keil_v5\ARM\Inc\ST\STM32F0xx-DUSE_STDPERIPH_DRIVER -DSTM32F0XX -DSTM32F030-o .\debug\nfc.o --omf_browse .\debug\nfc.crf --depend .\debug\nfc.d)
 I (.\inc\stm32f0xx.h)(0x4F6C6026)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.1\CMSIS\Include\core_cm0.h)(0x53688AAC)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x53463A44)
@@ -711,6 +712,6 @@ I (.\inc\stm32f0xx_usart.h)(0x4F6C6027)
 I (.\inc\stm32f0xx_wwdg.h)(0x4F6C6027)
 I (.\inc\stm32f0xx_misc.h)(0x4F6C6027)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x53463A44)
-I (user\nfc.h)(0x56ED5BB0)
-I (user\cmd.h)(0x56ED0697)
+I (user\nfc.h)(0x56EE22B5)
+I (user\cmd.h)(0x56EE250D)
 I (user\delay.h)(0x56ECF47E)

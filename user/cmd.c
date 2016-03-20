@@ -8,6 +8,7 @@
 *
 ***************************************************************************/
 #include "cmd.h"
+#include "nfc.h"
 #include <string.h>
 #include <stdint.h>
 
@@ -26,7 +27,7 @@
 ****************************************************************************/
 uint16_t create_cmd(uint16_t *cmd, uint16_t funcCod, uint16_t arg)
 {
-
+    uint8_t ax=0;
     uint16_t *point = cmd;
     uint16_t cmdl = 0;
     uint16_t *len_point;
@@ -37,22 +38,34 @@ uint16_t create_cmd(uint16_t *cmd, uint16_t funcCod, uint16_t arg)
     switch(funcCod) {           // add COD
     case ChangeMode : *cmd++ = ChangeMode;    break;
     case ReaderMode : *cmd++ = 0x10;    break;
+    case MUXMode : *cmd++ = MUXMode;    break;
     case IOMode : *cmd++ = IOMode;    break;
-
     default: break;
     }
     *cmd++ = TR;                //add check bit
-	switch(arg) {              //add DATA
+	switch(arg) {              //add DATA(begin with "FF", end to "00 FF")
+    // FOR ChangeMode:
 	case C_Reader :
-		*cmd++ = C_Reader;
+		*cmd++ = 0x01;
          cmdl += 1;
 		break;
     case C_MUX1 :
-        *cmd++ = C_MUX1;
+        *cmd++ = 0x03;
         cmdl += 1;
         break;
 
-    // FOR IO:
+    // FOR MUXMode:
+    case MUX_setDefault :
+        *cmd++ = 0x01;
+        *cmd++ = block;
+        for(ax=0;ax<KEYBITS;ax++)
+        {
+            *cmd++ = key[ax];
+        }
+        cmdl += (KEYBITS+POSITIONBITS+FUNCBITS);
+        break;
+
+    // FOR IOMode:
     case IO_LED_ON :
         *cmd++ = IO_LED;
         *cmd++ = IO_LED_1;
@@ -84,4 +97,23 @@ uint16_t create_cmd(uint16_t *cmd, uint16_t funcCod, uint16_t arg)
 	cmdl += 7;		       //begin 2 byte and end 2 byte and LEN(1bit) and TR(1bit) and COD(1bit)
 	cmd = point;
 	return cmdl;
+}
+
+/**********************************************************************
+*
+*! @brief   command create
+*! @note    you can add any command to create by add line in this function
+*! @note    and ATTATION, you will also change create_cmd function.
+*! @param   void
+*! @retval  void
+*
+***********************************************************************/
+void cmd_init(void)
+{
+    cmdlen_ledon = create_cmd(cmd_ledon, IOMode, IO_LED_ON);
+    cmdlen_ledoff = create_cmd(cmd_ledoff, IOMode, IO_LED_OFF);
+    cmdlen_buzzeron = create_cmd(cmd_buzzeron, IOMode, IO_Buzzer_ON);
+    cmdlen_buzzeroff = create_cmd(cmd_buzzeroff, IOMode, IO_Buzzer_OFF);
+    //default key and position is key[] and position
+    cmdlen_setdefault = create_cmd(cmd_setdefault, MUXMode, MUX_setDefault);
 }

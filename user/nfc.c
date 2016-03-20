@@ -23,6 +23,18 @@ uint16_t cmd_buzzeron[9];
 uint16_t cmd_buzzeroff[9];
 uint16_t cmdlen_buzzeron;
 uint16_t cmdlen_buzzeroff;
+uint16_t cmd_setdefault[15];
+uint16_t cmdlen_setdefault;
+
+//! context args was used to check NFC card context.
+//! this is for block 0x04, key is 11 12 13 14 15 16
+//const uint16_t context[16] = {0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x10,0x11,0x12,0x13,0x14,0x15,0x16};
+//! this is for block 0x01, key is 01 02 03 04 05 06
+const uint16_t context[16] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+//const uint16_t key[6] = {0x11,0x12,0x13,0x14,0x15,0x16};
+const uint16_t key[6] = {0x01,0x02,0x03,0x04,0x05,0x06};
+//const uint16_t block = 0x04;
+const uint16_t block = 0x02;
 
 /*********************************************************************
 *
@@ -119,6 +131,7 @@ void rightLight(void)
     delay_ms(100);
     send_cmd(cmd_ledoff, cmdlen_ledoff);
     delay_ms(100);
+
 }
 
 /*********************************************************************
@@ -132,28 +145,73 @@ void rightLight(void)
 void wrongLight(void)
 {
     send_cmd(cmd_ledon, cmdlen_ledon);
-    delay_ms(50);
+    delay_ms(30);
     send_cmd(cmd_ledoff, cmdlen_ledoff);
-    delay_ms(50);
+    delay_ms(30);
     send_cmd(cmd_ledon, cmdlen_ledon);
-    delay_ms(50);
+    delay_ms(30);
     send_cmd(cmd_ledoff, cmdlen_ledoff);
-    delay_ms(50);
+    delay_ms(30);
 }
 
-/**********************************************************************
+
+
+/*********************************************************************
 *
-*! @brief   command create
-*! @note    you can add any command to create by add line in this function
-*! @note    and ATTATION, you will also change create_cmd function.
+*! @brief   read and analysis received cmd
+*! @note    now there is only some of it
+*! @param   cmd: cmd waitting to read
+*! @retval  TRUE: cmd is right, including card is right one or set is down.
+*! @retval  FALSE: cmd is false, including card is another one or set is error.
+*
+**********************************************************************/
+uint8_t read_cmd(uint16_t *cmd, uint8_t flag)
+{
+	uint8_t ax = 0;
+    switch (flag) {
+        case auto_ret:
+        if(MUXMode == cmd[3])		//COD MUXMode
+    	{
+    		if(0x05 == cmd[5])		//function numb, used to return from NFC
+    		{
+    			for(;ax<16;ax++)
+    			{
+    				if(context[ax] != cmd[ax+6])
+    					return FALSE;
+    			}
+    			return TRUE;
+    		}
+    	}
+        break;
+        case setdefault_ret:
+        if(MUXMode == cmd[3])
+        {
+            if(0x04 == cmd[5] && 0x00 == cmd[6])	//0x04 function numb, used to return set result
+                return TRUE;
+        }
+        break;
+        default : break;
+    }
+
+	return FALSE;
+}
+
+/*******************************************************************
+*
+*! @brief   set default read block and key
+*! @note    if set right, click rightLight; if set wrong, click wrongLight
 *! @param   void
 *! @retval  void
 *
-***********************************************************************/
-void cmd_init(void)
+********************************************************************/
+void setDefault(void)
 {
-    cmdlen_ledon = create_cmd(cmd_ledon, IOMode, IO_LED_ON);
-    cmdlen_ledoff = create_cmd(cmd_ledoff, IOMode, IO_LED_OFF);
-    cmdlen_buzzeron = create_cmd(cmd_buzzeron, IOMode, IO_Buzzer_ON);
-    cmdlen_buzzeroff = create_cmd(cmd_buzzeroff, IOMode, IO_Buzzer_OFF);
+    uint16_t receReture[9];
+    send_cmd(cmd_setdefault, BASICBITS+FUNCBITS+POSITIONBITS+KEYBITS);
+    rece_cmd(receReture, BASICBITS+POSITIONBITS+FLAGBITS);
+    delay_ms(5);
+    if(read_cmd(receReture, setdefault_ret))
+        rightLight();
+    else
+        wrongLight();
 }
