@@ -16,19 +16,19 @@
 
 int main()
 {
-	uint16_t receData[24];
-	uint16_t SBUFF[2];
+	const uint8_t recebits = BASICBITS + FUNCBITS + CONTENTBITS;
+	uint16_t receData[recebits];
     uart_init();
     cmd_init();
+
+	setDefault();
+
     while(1)
     {
-        rece_cmd(receData, 24);
-        //rece_cmd(SBUFF, 2);
-        if(receData[6] == 0x01)
-            rightLight();
-        //else if(SBUFF[0] == 0x0020)
-        //    wrongLight();
-        //if(rece_cmd(receData, 10))
-        //   send_cmd(receData, 10);
+        rece_cmd(receData, recebits);
+		if(read_cmd(receData, auto_ret))
+			rightLight();
+		else
+			wrongLight();
     }
 }

@@ -26,13 +26,17 @@
 
 #define IO_LED      0x02    //LED DATA - 0X02
 #define IO_LED_1   0x01     // only led 1 can control
-#define IO_ON   0x01
+#define IO_Buzzer   0x03
+#define IO_ON   0x01        //including every IO output
 #define IO_OFF  0x00
 
-#define IO_Buzzer   0x03
 
-
-
+#define BASICBITS   7       //basic bits is beginbits(2) + endbits(2) + len(1) + cod(1) + TR(1)
+#define FUNCBITS    1       //if there is a function bits(after the TR), it also 1 bit
+#define POSITIONBITS    1   //default reading position in setdefault
+#define KEYBITS     6       //read keys, always are 6 bits
+#define FLAGBITS    1       //return true(0x00) or false(0x01)
+#define CONTENTBITS 16      //content in block
 
 enum funcCod {
     ChangeMode      = 0x13, //!< change nfc module mode: change to Reader mode, or MUX mode or P2P mode
@@ -47,14 +51,15 @@ enum funcCod {
 enum arg
 {
     //! for ChangeMode:
-    C_Reader        = 0x01,  //!< ChangeMode -> reader mode
+    C_Reader,  //!< ChangeMode -> reader mode
     C_P2P,            //!< ChangeMode -> P2P mode
-    C_MUX1          = 0x03,  //!< ChangeMode -> MUX1 mode
+    C_MUX1,  //!< ChangeMode -> MUX1 mode
     C_MUX2,           //!< ChangeMode -> MUX2 mode
 
     //! for ReaderMode:
 
     //! for MUX1Mode:
+    MUX_setDefault,     //!< MUXMode: set default card reading position
 
     //! for IO:
     IO_IOinit,      //!< IO initialization
@@ -69,19 +74,16 @@ enum arg
 
 };
 
-/**************************************************************************
-*
-*! @func: create_cmd
-*! @args:   cmd: created command in this arg
-*!           funcCod: select COD
-*!           arg: select next func in COD
-*! @return: uint16_t cmdl: the length of cmd
-*! @decription: create a command for send
-*!              BEGIN1 BEGIN2 LEN COD TR DATA(several bits) END1 END2
-*!              LEN = LEN(1bit) + COD(1bit) + TR(1bit) + DATA(several bits)
-*
-****************************************************************************/
+enum flag
+{
+    auto_ret,           //!< NFC auto return its card context with default positon and key
+    setdefault_ret      //!< when set default position and key, NFC module return right or wrong
+};
+
+//! create a command
 uint16_t create_cmd(uint16_t * cmd, uint16_t funcCod, uint16_t arg);
+//! command create
+void cmd_init(void);
 
 #ifdef __cplusplus
 }

@@ -678,14 +678,14 @@
               <FilePath>.\user\delay.h</FilePath>
             </File>
             <File>
-              <FileName>nfc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\nfc.c</FilePath>
-            </File>
-            <File>
               <FileName>nfc.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\user\nfc.h</FilePath>
+            </File>
+            <File>
+              <FileName>nfc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\user\nfc.c</FilePath>
             </File>
           </Files>
         </Group>
