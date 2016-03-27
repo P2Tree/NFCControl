@@ -27,9 +27,15 @@
 #define IO_LED      0x02    //LED DATA - 0X02
 #define IO_LED_1   0x01     // only led 1 can control
 #define IO_Buzzer   0x03
-#define IO_ON   0x01        //including every IO output
-#define IO_OFF  0x00
-
+#define IO_SET		0x07
+#define IO_ON   	0x01        //including every IO output
+#define IO_OFF  	0x00
+#define IO_HIGH		0x01
+#define IO_LOW		0x00
+#define IO_P1		0x01	// in NFC, it is PB3
+#define IO_P2		0x02	// in NFC, it is PB4
+#define IO_P3		0x03	// in NFC, it is PB5
+#define IO_P4		0x04	// in NFC, it is PB6
 
 #define BASICBITS   7       //basic bits is beginbits(2) + endbits(2) + len(1) + cod(1) + TR(1)
 #define FUNCBITS    1       //if there is a function bits(after the TR), it also 1 bit
@@ -70,14 +76,30 @@ enum arg
     IO_PressButton,//!< press button control
     IO_IOget,       //!< get IO status
     IO_IOstatus_R,   //!< NFC return for IO status, return IO_IOget
-    IO_IOset            //!< set IO status
+    IO_IO1set_high,            //!< set IO1_PB3 status to high
+	IO_IO1set_low	//!< set IO1_PB3 status to low
 
 };
 
-enum flag
+enum flag	//what do you want to read the cmd --control flag
 {
     auto_ret,           //!< NFC auto return its card context with default positon and key
-    setdefault_ret      //!< when set default position and key, NFC module return right or wrong
+    setdefault_ret,      //!< when set default position and key, NFC module return right or wrong
+	changeMode_ret		//!< when changeMode, NFC return
+};
+
+enum IOselect
+{
+	IO1,
+	IO2,
+	IO3,
+	IO4
+};
+
+enum IOlevel
+{
+	high,
+	low
 };
 
 //! create a command

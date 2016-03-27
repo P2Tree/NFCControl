@@ -25,6 +25,12 @@ uint16_t cmdlen_buzzeron;
 uint16_t cmdlen_buzzeroff;
 uint16_t cmd_setdefault[15];
 uint16_t cmdlen_setdefault;
+uint16_t cmd_changetoMUXmode[8];
+uint16_t cmdlen_changetoMUXmode;
+uint16_t cmd_IO1setHigh[10];
+uint16_t cmdlen_IO1setHigh;
+uint16_t cmd_IO1setLow[10];
+uint16_t cmdlen_IO1setLow;
 
 //! context args was used to check NFC card context.
 //! this is for block 0x04, key is 11 12 13 14 15 16
@@ -163,6 +169,7 @@ void wrongLight(void)
 *! @brief   read and analysis received cmd
 *! @note    now there is only some of it
 *! @param   cmd: cmd waitting to read
+*! @param   flag: function for read_cmd, "what do you want to read?" flag.
 *! @retval  TRUE: cmd is right, including card is right one or set is down.
 *! @retval  FALSE: cmd is false, including card is another one or set is error.
 *
@@ -192,6 +199,14 @@ uint8_t read_cmd(uint16_t *cmd, uint8_t flag)
                 return TRUE;
         }
         break;
+		case changeMode_ret:
+		if(ChangeModeStatus_R == cmd[3])	//only add MUX1 function change read_cmd
+		{
+			if(0x03 == cmd[5] && 0x00 == cmd[6])	//0x03 is the function numb for MUX1
+				return TRUE;
+		}
+		//here add other mode change read_cmd
+		break;
         default : break;
     }
 
@@ -213,6 +228,26 @@ void setDefault(void)
     rece_cmd(receReture, BASICBITS+POSITIONBITS+FLAGBITS);
     delay_ms(5);
     if(read_cmd(receReture, setdefault_ret))
+        rightLight();
+    else
+        wrongLight();
+}
+
+/********************************************************************
+*
+*! @brief	change NFC module mode to MUX mode
+*! @note	only change to MUX mode,find changetoReadermode() if you want
+*! @param	void
+*! @retval	void
+*
+********************************************************************/
+void changetoMUXmode()
+{
+	uint16_t receReture[9];
+    send_cmd(cmd_changetoMUXmode, BASICBITS+FUNCBITS);
+    rece_cmd(receReture, BASICBITS+FUNCBITS+FLAGBITS);
+    delay_ms(5);
+    if(read_cmd(receReture, changeMode_ret))
         rightLight();
     else
         wrongLight();

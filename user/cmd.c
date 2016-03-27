@@ -88,7 +88,18 @@ uint16_t create_cmd(uint16_t *cmd, uint16_t funcCod, uint16_t arg)
         *cmd++ = IO_OFF;
         cmdl += 2;
         break;
-
+	case IO_IO1set_high :
+		*cmd++ = IO_SET;
+		*cmd++ = IO_P1;
+		*cmd++ = IO_HIGH;
+		cmdl += 3;
+		break;
+	case IO_IO1set_low :
+		*cmd++ = IO_SET;
+		*cmd++ = IO_P1;
+		*cmd++ = IO_LOW;
+		cmdl += 3;
+		break;
 	default: break;
 	}
     *cmd++ = END1;
@@ -116,4 +127,8 @@ void cmd_init(void)
     cmdlen_buzzeroff = create_cmd(cmd_buzzeroff, IOMode, IO_Buzzer_OFF);
     //default key and position is key[] and position
     cmdlen_setdefault = create_cmd(cmd_setdefault, MUXMode, MUX_setDefault);
+	//once to up the SMC532, change to MUX mode will be called for readMUX function
+	cmdlen_changetoMUXmode = create_cmd(cmd_changetoMUXmode, ChangeMode, C_MUX1);
+	cmdlen_IO1setHigh = create_cmd(cmd_IO1setHigh, IOMode, IO_IO1set_high);
+	cmdlen_IO1setLow = create_cmd(cmd_IO1setLow, IOMode, IO_IO1set_low);
 }
