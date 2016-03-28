@@ -252,3 +252,60 @@ void changetoMUXmode()
     else
         wrongLight();
 }
+
+/*******************************************************************
+*
+*! @brief       IO control.
+*! @note        before used i realized it with NFC control, and now i\
+*		use micro controler to control IO.
+*! @note        and only for IO output, you see, this is a simple function.
+*! @param       IOselect: select which IO will be control.
+*! @param       IOlevel: High or Low in IO output.
+*! @retval      void
+*
+********************************************************************/
+void IOset(uint16_t IOselect, uint16_t IOlevel)
+{
+
+	if(IOselect == IO1 && IOlevel == high)
+	{
+		GPIOA->BSRR |= GPIO_BSRR_BS_4;
+		GPIOA->BSRR |= GPIO_BSRR_BS_5;	//output high
+		//send_cmd(cmd_IO1setHigh, cmdlen_IO1setHigh);	// NOT RUN
+	}
+	else if(IOselect == IO1 && IOlevel == low)
+	{
+		GPIOA->BRR |= GPIO_BSRR_BS_4;
+		GPIOA->BRR |= GPIO_BSRR_BS_5;		//output low
+		//send_cmd(cmd_IO1setLow, cmdlen_IO1setLow);	// NOT RUN
+	}
+
+}
+
+/******************************************************************
+*
+*! @brief       initialization GPIO in microcontroler
+*! @note        None
+*! @param       void
+*! @retval      void
+*
+*******************************************************************/
+void IOinit(void)
+{
+	//IOPAEN=1, enable clk of GPIOA
+	RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
+	//set IO mode,general IO
+	GPIOA->MODER |= GPIO_MODER_MODER4_0 + GPIO_MODER_MODER5_0;
+	GPIOA->MODER &= ~(GPIO_MODER_MODER4_1 + GPIO_MODER_MODER5_1);
+	//set output mode
+	GPIOA->OTYPER &= ~(GPIO_OTYPER_OT_4 + GPIO_OTYPER_OT_5);
+	//set speed,10MHz
+	GPIOA->OSPEEDR |= GPIO_OSPEEDER_OSPEEDR4_0 + GPIO_OSPEEDER_OSPEEDR5_0;
+	GPIOA->OSPEEDR &= ~(GPIO_OSPEEDER_OSPEEDR4_1 + GPIO_OSPEEDER_OSPEEDR5_1);
+	//set pullupdown,no up no down
+	GPIOA->PUPDR &= ~(GPIO_PUPDR_PUPDR4_0 + GPIO_PUPDR_PUPDR5_0);
+	GPIOA->PUPDR &= ~(GPIO_PUPDR_PUPDR4_1 + GPIO_PUPDR_PUPDR5_1);
+
+	GPIOA->BRR |= GPIO_BSRR_BS_4;
+	GPIOA->BRR |= GPIO_BSRR_BS_5;		//output low
+}

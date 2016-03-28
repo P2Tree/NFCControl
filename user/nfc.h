@@ -46,6 +46,10 @@ uint8_t read_cmd(uint16_t *cmd, uint8_t flag);
 void setDefault(void);
 //! change NFC module mode to MUX1
 void changetoMUXmode(void);
+//! IO control
+void IOset(uint16_t, uint16_t);
+//! IO initialization
+void IOinit(void);
 #ifdef __cplusplus
 }
 #endif
