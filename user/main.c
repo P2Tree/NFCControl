@@ -14,8 +14,6 @@
 #include "delay.h"
 #include "nfc.h"
 
-//void LightOFF(void);
-
 int main()
 {
 	const uint8_t recebits = BASICBITS + FUNCBITS + CONTENTBITS;
